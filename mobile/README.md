@@ -1,17 +1,33 @@
-# mobile
+# SafeSpend AI Mobile App
 
-A new Flutter project.
+This folder contains the Flutter mobile application for SafeSpend AI.
 
-## Getting Started
+## Overview
 
-This project is a starting point for a Flutter application.
+SafeSpend AI is an AI-powered financial health assistant that helps users understand their spending, savings, debt, and overall financial health.
 
-A few resources to get you started if this is your first Flutter project:
+## Features
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+- Financial health score
+- AI-based financial health prediction
+- Expense analysis
+- Savings rate analysis
+- Debt ratio analysis
+- Financial insights
+- Personalized recommendations
+- Clean mobile dashboard
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Technology
+
+- Flutter
+- Dart
+- REST API
+- FastAPI backend
+
+## Run the App
+
+From the `mobile` directory:
+
+```bash
+flutter pub get
+flutter run
