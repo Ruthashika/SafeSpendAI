@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const SafeSpendApp());
 }
 
@@ -40,15 +42,15 @@ class SafeSpendApp extends StatelessWidget {
             horizontal: 18,
             vertical: 17,
           ),
-          border: OutlineInputBorder(
+          border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(16)),
             borderSide: BorderSide.none,
           ),
-          enabledBorder: OutlineInputBorder(
+          enabledBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(16)),
             borderSide: BorderSide.none,
           ),
-          focusedBorder: OutlineInputBorder(
+          focusedBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(16)),
             borderSide: BorderSide(
               color: Color(0xFF3157D5),
@@ -61,7 +63,10 @@ class SafeSpendApp extends StatelessWidget {
           indicatorColor: Color(0xFFE8EDFF),
           elevation: 8,
           labelTextStyle: WidgetStatePropertyAll(
-            TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+            TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 12,
+            ),
           ),
         ),
       ),
@@ -70,9 +75,8 @@ class SafeSpendApp extends StatelessWidget {
   }
 }
 
-
 // ============================================================
-// SAFE SPEND BRANDING
+// BRANDING
 // ============================================================
 
 class SafeSpendLogo extends StatelessWidget {
@@ -103,7 +107,7 @@ class SafeSpendLogo extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Color(0x332E4CC5),
                 blurRadius: 22,
@@ -124,7 +128,7 @@ class SafeSpendLogo extends StatelessWidget {
                 height: size * 0.36,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Color(0xFFE9B949),
+                  color: const Color(0xFFE9B949),
                   border: Border.all(
                     color: Colors.white,
                     width: 2,
@@ -133,7 +137,7 @@ class SafeSpendLogo extends StatelessWidget {
                 child: Icon(
                   Icons.currency_rupee_rounded,
                   size: size * 0.20,
-                  color: Color(0xFF24346E),
+                  color: const Color(0xFF24346E),
                 ),
               ),
               Positioned(
@@ -183,7 +187,7 @@ class SafeSpendLogo extends StatelessWidget {
 }
 
 // ============================================================
-// DUMMY LOGIN
+// LOGIN
 // ============================================================
 
 class LoginScreen extends StatefulWidget {
@@ -197,6 +201,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool loading = false;
 
   void enterApp() {
+    if (loading) return;
+
     setState(() => loading = true);
 
     Future.delayed(const Duration(milliseconds: 450), () {
@@ -204,8 +210,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const MainNavigation(),
-          transitionsBuilder: (_, animation, __, child) {
+          pageBuilder: (_, _, _) => const MainNavigation(),
+          transitionsBuilder: (_, animation, _, child) {
             return FadeTransition(
               opacity: animation,
               child: child,
@@ -220,8 +226,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void continueAsGuest() {
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
-        pageBuilder: (_, __, ___) => const MainNavigation(),
-        transitionsBuilder: (_, animation, __, child) {
+        pageBuilder: (_, _, _) => const MainNavigation(),
+        transitionsBuilder: (_, animation, _, child) {
           return FadeTransition(
             opacity: animation,
             child: child,
@@ -246,7 +252,6 @@ class _LoginScreenState extends State<LoginScreen> {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: const Color(0xFFE6E9F2),
-          width: 1,
         ),
       ),
       child: Row(
@@ -339,9 +344,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const SafeSpendLogo(size: 82),
-
                       const SizedBox(height: 26),
-
                       const Text(
                         'Your money, understood.',
                         textAlign: TextAlign.center,
@@ -352,9 +355,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Color(0xFF18234A),
                         ),
                       ),
-
                       const SizedBox(height: 8),
-
                       Text(
                         'AI-powered financial health, made simple.',
                         textAlign: TextAlign.center,
@@ -364,9 +365,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 1.45,
                         ),
                       ),
-
                       const SizedBox(height: 28),
-
                       Container(
                         padding: const EdgeInsets.all(22),
                         decoration: BoxDecoration(
@@ -391,9 +390,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: Color(0xFF18234A),
                               ),
                             ),
-
                             const SizedBox(height: 5),
-
                             Text(
                               'Your secure financial companion is ready.',
                               style: TextStyle(
@@ -401,26 +398,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                 fontSize: 13,
                               ),
                             ),
-
                             const SizedBox(height: 20),
-
                             demoInput(
                               icon: Icons.mail_outline_rounded,
                               label: 'EMAIL',
                               value: 'demo@safespend.ai',
                             ),
-
                             const SizedBox(height: 12),
-
                             demoInput(
                               icon: Icons.lock_outline_rounded,
                               label: 'PASSWORD',
                               value: 'SafeSpend2026',
                               masked: true,
                             ),
-
                             const SizedBox(height: 20),
-
                             SizedBox(
                               height: 54,
                               child: ElevatedButton(
@@ -464,9 +455,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                               ),
                             ),
-
                             const SizedBox(height: 12),
-
                             OutlinedButton(
                               onPressed: continueAsGuest,
                               style: OutlinedButton.styleFrom(
@@ -489,9 +478,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                       ),
-
                       const SizedBox(height: 18),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -535,7 +522,6 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation> {
   int selectedIndex = 0;
-
   Map<String, dynamic>? latestResult;
 
   void openResult(Map<String, dynamic> result) {
@@ -574,14 +560,15 @@ class _MainNavigationState extends State<MainNavigation> {
     ];
 
     return Scaffold(
-      body: screens[selectedIndex],
+      body: IndexedStack(
+        index: selectedIndex,
+        children: screens,
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: selectedIndex,
         height: 72,
         onDestinationSelected: (index) {
-          setState(() {
-            selectedIndex = index;
-          });
+          setState(() => selectedIndex = index);
         },
         destinations: const [
           NavigationDestination(
@@ -624,41 +611,23 @@ class DashboardScreen extends StatelessWidget {
     required this.onAnalyze,
   });
 
-  // ==========================================================
-  // FORMAT NUMBER
-  // ==========================================================
-
   String formatNumber(dynamic value) {
     final number = double.tryParse(value.toString());
-
-    if (number == null) {
-      return value.toString();
-    }
-
+    if (number == null) return value.toString();
     if (number == number.roundToDouble()) {
       return number.toInt().toString();
     }
-
     return number.toStringAsFixed(1);
   }
 
-  // ==========================================================
-  // GET METRIC
-  // ==========================================================
-
   String metric(String key) {
-    final data = result;
+    if (result == null) return '--';
 
-    if (data == null) {
-      return '--';
+    if (result![key] != null) {
+      return formatNumber(result![key]);
     }
 
-    if (data[key] != null) {
-      return formatNumber(data[key]);
-    }
-
-    final metrics = data['financial_metrics'];
-
+    final metrics = result!['financial_metrics'];
     if (metrics is Map && metrics[key] != null) {
       return formatNumber(metrics[key]);
     }
@@ -666,17 +635,12 @@ class DashboardScreen extends StatelessWidget {
     return '--';
   }
 
-  // ==========================================================
-  // FIRST AI INSIGHT
-  // ==========================================================
-
   String firstInsight() {
     if (result == null) {
       return 'Complete your assessment to receive personalized financial insights.';
     }
 
     final insights = result!['insights'];
-
     if (insights is List && insights.isNotEmpty) {
       return insights.first.toString();
     }
@@ -684,29 +648,18 @@ class DashboardScreen extends StatelessWidget {
     return 'Your financial health has been analyzed successfully.';
   }
 
-  // ==========================================================
-  // GET RISK
-  // ==========================================================
-
   String getRisk() {
-    if (result == null) {
-      return 'Not analyzed';
-    }
+    if (result == null) return 'Not analyzed';
 
     return result!['risk_level']?.toString() ??
         result!['prediction']?.toString() ??
         'Unknown';
   }
 
-  // ==========================================================
-  // RISK COLOR
-  // ==========================================================
-
   Color getRiskColor(String risk) {
     final value = risk.toLowerCase();
 
     if (value.contains('high') ||
-        value.contains('risk') ||
         value.contains('poor') ||
         value.contains('critical')) {
       return Colors.red;
@@ -727,14 +680,8 @@ class DashboardScreen extends StatelessWidget {
     return Colors.white;
   }
 
-  // ==========================================================
-  // SCORE
-  // ==========================================================
-
   double getScore() {
-    if (result == null) {
-      return 0;
-    }
+    if (result == null) return 0;
 
     return double.tryParse(
           result!['financial_health_score']?.toString() ?? '0',
@@ -750,11 +697,12 @@ class DashboardScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
         title: const Row(
           children: [
-            SafeSpendLogo(size: 38, showWordmark: false),
+            SafeSpendLogo(
+              size: 38,
+              showWordmark: false,
+            ),
             SizedBox(width: 11),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -781,7 +729,15 @@ class DashboardScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text(
+                    'Notifications are not available in demo mode.',
+                  ),
+                ),
+              );
+            },
             icon: const Icon(Icons.notifications_none),
           ),
         ],
@@ -800,9 +756,7 @@ class DashboardScreen extends StatelessWidget {
                 color: Color(0xFF18234A),
               ),
             ),
-
             const SizedBox(height: 6),
-
             const Text(
               'Understand your money. Improve your future.',
               style: TextStyle(
@@ -810,13 +764,7 @@ class DashboardScreen extends StatelessWidget {
                 fontSize: 14,
               ),
             ),
-
             const SizedBox(height: 24),
-
-            // ==================================================
-            // SCORE CARD
-            // ==================================================
-
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(24),
@@ -842,8 +790,7 @@ class DashboardScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
                         'AI Financial Health',
@@ -873,20 +820,15 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 18),
-
                   Text(
-                    result == null
-                        ? '--'
-                        : score.toStringAsFixed(1),
+                    result == null ? '--' : score.toStringAsFixed(1),
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 58,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-
                   Text(
                     result == null
                         ? 'Complete your assessment'
@@ -896,9 +838,7 @@ class DashboardScreen extends StatelessWidget {
                       fontSize: 14,
                     ),
                   ),
-
                   const SizedBox(height: 14),
-
                   if (result != null)
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -913,42 +853,30 @@ class DashboardScreen extends StatelessWidget {
                       ),
                       child: Text(
                         risk.toUpperCase(),
-                        style: TextStyle(
-                          color: riskColor == Colors.white
-                              ? Colors.white
-                              : Colors.white,
+                        style: const TextStyle(
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                         ),
                       ),
                     ),
-
                   const SizedBox(height: 20),
-
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: LinearProgressIndicator(
                       value: result == null
                           ? 0
-                          : (score.clamp(0, 100)) / 100,
+                          : (score.clamp(0.0, 100.0)) / 100.0,
                       minHeight: 8,
                       backgroundColor: Colors.white24,
                       valueColor:
-                          const AlwaysStoppedAnimation<Color>(
-                        Colors.white,
-                      ),
+                          const AlwaysStoppedAnimation<Color>(Colors.white),
                     ),
                   ),
                 ],
               ),
             ),
-
             const SizedBox(height: 26),
-
-            // ==================================================
-            // FINANCIAL JOURNEY
-            // ==================================================
-
             const Text(
               'Your Financial Journey',
               style: TextStyle(
@@ -956,9 +884,7 @@ class DashboardScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             const SizedBox(height: 14),
-
             Row(
               children: [
                 Expanded(
@@ -982,9 +908,7 @@ class DashboardScreen extends StatelessWidget {
                 ),
               ],
             ),
-
             const SizedBox(height: 12),
-
             Row(
               children: [
                 Expanded(
@@ -1008,13 +932,7 @@ class DashboardScreen extends StatelessWidget {
                 ),
               ],
             ),
-
             const SizedBox(height: 28),
-
-            // ==================================================
-            // AI INSIGHTS
-            // ==================================================
-
             const Text(
               'AI Insights',
               style: TextStyle(
@@ -1022,28 +940,13 @@ class DashboardScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             const SizedBox(height: 14),
-
-            if (result == null)
-              _insightCard(
-                Icons.auto_awesome,
-                'Get your AI financial score',
-                'Complete the assessment to receive personalized financial insights.',
-              )
-            else
-              _insightCard(
-                Icons.auto_awesome,
-                'AI Insight',
-                firstInsight(),
-              ),
-
+            _insightCard(
+              Icons.auto_awesome,
+              result == null ? 'Get your AI financial score' : 'AI Insight',
+              firstInsight(),
+            ),
             const SizedBox(height: 24),
-
-            // ==================================================
-            // BUTTON
-            // ==================================================
-
             SizedBox(
               width: double.infinity,
               height: 56,
@@ -1063,7 +966,6 @@ class DashboardScreen extends StatelessWidget {
                   backgroundColor: const Color(0xFF3157D5),
                   foregroundColor: Colors.white,
                   elevation: 0,
-                  shadowColor: Colors.transparent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(17),
                   ),
@@ -1113,6 +1015,7 @@ class DashboardScreen extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             value,
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 19,
               fontWeight: FontWeight.bold,
@@ -1186,7 +1089,7 @@ class DashboardScreen extends StatelessWidget {
 }
 
 // ============================================================
-// ASSESSMENT SCREEN
+// ASSESSMENT
 // ============================================================
 
 class AssessmentScreen extends StatefulWidget {
@@ -1198,62 +1101,30 @@ class AssessmentScreen extends StatefulWidget {
   });
 
   @override
-  State<AssessmentScreen> createState() =>
-      _AssessmentScreenState();
+  State<AssessmentScreen> createState() => _AssessmentScreenState();
 }
 
-class _AssessmentScreenState
-    extends State<AssessmentScreen> {
+class _AssessmentScreenState extends State<AssessmentScreen> {
   final formKey = GlobalKey<FormState>();
 
-  final ageController =
-      TextEditingController(text: '20');
-
-  final incomeController =
-      TextEditingController();
-
-  final dependentsController =
-      TextEditingController(text: '0');
-
-  final rentController =
-      TextEditingController(text: '0');
-
-  final loanController =
-      TextEditingController(text: '0');
-
-  final insuranceController =
-      TextEditingController(text: '0');
-
-  final groceriesController =
-      TextEditingController(text: '0');
-
-  final transportController =
-      TextEditingController(text: '0');
-
-  final eatingOutController =
-      TextEditingController(text: '0');
-
-  final entertainmentController =
-      TextEditingController(text: '0');
-
-  final utilitiesController =
-      TextEditingController(text: '0');
-
-  final healthcareController =
-      TextEditingController(text: '0');
-
-  final educationController =
-      TextEditingController(text: '0');
-
-  final otherController =
-      TextEditingController(text: '0');
-
-  final savingsGoalController =
-      TextEditingController(text: '0');
+  final ageController = TextEditingController(text: '20');
+  final incomeController = TextEditingController();
+  final dependentsController = TextEditingController(text: '0');
+  final rentController = TextEditingController(text: '0');
+  final loanController = TextEditingController(text: '0');
+  final insuranceController = TextEditingController(text: '0');
+  final groceriesController = TextEditingController(text: '0');
+  final transportController = TextEditingController(text: '0');
+  final eatingOutController = TextEditingController(text: '0');
+  final entertainmentController = TextEditingController(text: '0');
+  final utilitiesController = TextEditingController(text: '0');
+  final healthcareController = TextEditingController(text: '0');
+  final educationController = TextEditingController(text: '0');
+  final otherController = TextEditingController(text: '0');
+  final savingsGoalController = TextEditingController(text: '0');
 
   String occupation = 'Student';
   String cityTier = 'Tier 1';
-
   bool loading = false;
 
   @override
@@ -1273,30 +1144,34 @@ class _AssessmentScreenState
     educationController.dispose();
     otherController.dispose();
     savingsGoalController.dispose();
-
     super.dispose();
   }
 
   double number(TextEditingController controller) {
-    return double.tryParse(controller.text) ?? 0;
+    return double.tryParse(controller.text.trim()) ?? 0;
+  }
+
+  int integer(TextEditingController controller, {int fallback = 0}) {
+    return int.tryParse(controller.text.trim()) ?? fallback;
   }
 
   Future<void> analyze() async {
+    if (loading) return;
+
     if (!formKey.currentState!.validate()) {
       return;
     }
 
-    setState(() {
-      loading = true;
-    });
+    FocusScope.of(context).unfocus();
 
-    final data = {
-      'age': int.tryParse(ageController.text) ?? 20,
+    setState(() => loading = true);
+
+    final data = <String, dynamic>{
+      'age': integer(ageController, fallback: 20),
       'monthly_income': number(incomeController),
       'occupation': occupation,
       'city_tier': cityTier,
-      'dependents':
-          int.tryParse(dependentsController.text) ?? 0,
+      'dependents': integer(dependentsController),
       'rent': number(rentController),
       'loan_payment': number(loanController),
       'insurance': number(insuranceController),
@@ -1308,44 +1183,31 @@ class _AssessmentScreenState
       'healthcare': number(healthcareController),
       'education': number(educationController),
       'other_expenses': number(otherController),
-
-      // FastAPI expects savings_goal as STRING.
-      'savings_goal':
-          savingsGoalController.text.trim(),
+      'savings_goal': savingsGoalController.text.trim(),
     };
 
     try {
-      debugPrint(
-        'Sending SafeSpend request: ${jsonEncode(data)}',
-      );
+      debugPrint('SafeSpend request: ${jsonEncode(data)}');
 
-      final response =
-          await SafeSpendApi.predict(data);
+      final response = await SafeSpendApi.predict(data);
 
-      debugPrint(
-        'SafeSpend response: ${jsonEncode(response)}',
-      );
+      debugPrint('SafeSpend response: ${jsonEncode(response)}');
 
       if (!mounted) return;
 
-      setState(() {
-        loading = false;
-      });
+      setState(() => loading = false);
 
       widget.onResult(response);
-
-      Navigator.pop(context);
+      Navigator.of(context).pop();
     } catch (e) {
       if (!mounted) return;
 
-      setState(() {
-        loading = false;
-      });
+      setState(() => loading = false);
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'SafeSpend AI error:\n$e',
+            'SafeSpend AI error:\n${e.toString()}',
           ),
           duration: const Duration(seconds: 8),
         ),
@@ -1369,9 +1231,14 @@ class _AssessmentScreenState
         key: formKey,
         child: ListView(
           padding: const EdgeInsets.all(20),
+          keyboardDismissBehavior:
+              ScrollViewKeyboardDismissBehavior.onDrag,
           children: [
             const Center(
-              child: SafeSpendLogo(size: 54, showWordmark: false),
+              child: SafeSpendLogo(
+                size: 54,
+                showWordmark: false,
+              ),
             ),
             const SizedBox(height: 18),
             const Text(
@@ -1381,9 +1248,7 @@ class _AssessmentScreenState
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             const SizedBox(height: 8),
-
             const Text(
               'Our AI will analyze your financial habits and generate a personalized health score.',
               style: TextStyle(
@@ -1391,18 +1256,15 @@ class _AssessmentScreenState
                 height: 1.4,
               ),
             ),
-
             const SizedBox(height: 28),
-
             _sectionTitle('Personal Information'),
-
             _numberField(
               ageController,
               'Age',
               Icons.person_outline,
               required: true,
+              integerOnly: true,
             ),
-
             _dropdown(
               label: 'Occupation',
               value: occupation,
@@ -1414,12 +1276,10 @@ class _AssessmentScreenState
                 'Other',
               ],
               onChanged: (value) {
-                setState(() {
-                  occupation = value!;
-                });
+                if (value == null) return;
+                setState(() => occupation = value);
               },
             ),
-
             _dropdown(
               label: 'City Tier',
               value: cityTier,
@@ -1429,129 +1289,103 @@ class _AssessmentScreenState
                 'Tier 3',
               ],
               onChanged: (value) {
-                setState(() {
-                  cityTier = value!;
-                });
+                if (value == null) return;
+                setState(() => cityTier = value);
               },
             ),
-
             _numberField(
               dependentsController,
               'Number of Dependents',
               Icons.family_restroom,
+              integerOnly: true,
             ),
-
             const SizedBox(height: 20),
-
             _sectionTitle('Income'),
-
             _numberField(
               incomeController,
               'Monthly Income (₹)',
               Icons.currency_rupee,
               required: true,
             ),
-
             const SizedBox(height: 20),
-
             _sectionTitle('Monthly Expenses'),
-
             _numberField(
               rentController,
               'Rent / Housing (₹)',
               Icons.home_outlined,
             ),
-
             _numberField(
               loanController,
               'Loan Payment (₹)',
               Icons.credit_card_outlined,
             ),
-
             _numberField(
               insuranceController,
               'Insurance (₹)',
               Icons.security_outlined,
             ),
-
             _numberField(
               groceriesController,
               'Groceries (₹)',
               Icons.shopping_cart_outlined,
             ),
-
             _numberField(
               transportController,
               'Transport (₹)',
               Icons.directions_bus_outlined,
             ),
-
             _numberField(
               eatingOutController,
               'Eating Out (₹)',
               Icons.restaurant_outlined,
             ),
-
             _numberField(
               entertainmentController,
               'Entertainment (₹)',
               Icons.movie_outlined,
             ),
-
             _numberField(
               utilitiesController,
               'Utilities (₹)',
               Icons.bolt_outlined,
             ),
-
             _numberField(
               healthcareController,
               'Healthcare (₹)',
               Icons.health_and_safety_outlined,
             ),
-
             _numberField(
               educationController,
               'Education (₹)',
               Icons.school_outlined,
             ),
-
             _numberField(
               otherController,
               'Other Expenses (₹)',
               Icons.more_horiz,
             ),
-
             const SizedBox(height: 20),
-
             _sectionTitle('Savings Goal'),
-
             _numberField(
               savingsGoalController,
               'Monthly Savings Goal (₹)',
               Icons.savings_outlined,
             ),
-
             const SizedBox(height: 30),
-
             SizedBox(
               height: 58,
               child: ElevatedButton.icon(
-                onPressed:
-                    loading ? null : analyze,
+                onPressed: loading ? null : analyze,
                 icon: loading
                     ? const SizedBox(
                         width: 20,
                         height: 20,
-                        child:
-                            CircularProgressIndicator(
+                        child: CircularProgressIndicator(
                           strokeWidth: 2,
                           color: Colors.white,
                         ),
                       )
-                    : const Icon(
-                        Icons.auto_awesome,
-                      ),
+                    : const Icon(Icons.auto_awesome),
                 label: Text(
                   loading
                       ? 'Analyzing...'
@@ -1562,17 +1396,17 @@ class _AssessmentScreenState
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      const Color(0xFF3157D5),
+                  backgroundColor: const Color(0xFF3157D5),
                   foregroundColor: Colors.white,
+                  disabledBackgroundColor:
+                      const Color(0xFF3157D5),
+                  disabledForegroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(16),
                   ),
                 ),
               ),
             ),
-
             const SizedBox(height: 30),
           ],
         ),
@@ -1582,8 +1416,7 @@ class _AssessmentScreenState
 
   Widget _sectionTitle(String title) {
     return Padding(
-      padding:
-          const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.only(bottom: 12),
       child: Text(
         title,
         style: const TextStyle(
@@ -1599,47 +1432,58 @@ class _AssessmentScreenState
     String label,
     IconData icon, {
     bool required = false,
+    bool integerOnly = false,
   }) {
     return Padding(
-      padding:
-          const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.only(bottom: 12),
       child: TextFormField(
         controller: controller,
-        keyboardType:
-            const TextInputType.numberWithOptions(
-          decimal: true,
-        ),
+        keyboardType: integerOnly
+            ? TextInputType.number
+            : const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
         decoration: InputDecoration(
           labelText: label,
           prefixIcon: Icon(icon),
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none,
           ),
         ),
-        validator: required
-            ? (value) {
-                if (value == null ||
-                    value.trim().isEmpty) {
-                  return 'This field is required';
-                }
+        validator: (value) {
+          final text = value?.trim() ?? '';
 
-                if (double.tryParse(value) ==
-                    null) {
-                  return 'Enter a valid number';
-                }
+          if (required && text.isEmpty) {
+            return 'This field is required';
+          }
 
-                if (label.contains('Income') &&
-                    double.parse(value) <= 0) {
-                  return 'Income must be greater than 0';
-                }
+          if (text.isEmpty) {
+            return null;
+          }
 
-                return null;
-              }
-            : null,
+          final parsed = double.tryParse(text);
+
+          if (parsed == null) {
+            return 'Enter a valid number';
+          }
+
+          if (parsed < 0) {
+            return 'Value cannot be negative';
+          }
+
+          if (integerOnly && !text.contains('.') && parsed % 1 != 0) {
+            return 'Enter a whole number';
+          }
+
+          if (label.contains('Income') && parsed <= 0) {
+            return 'Income must be greater than 0';
+          }
+
+          return null;
+        },
       ),
     );
   }
@@ -1651,26 +1495,22 @@ class _AssessmentScreenState
     required ValueChanged<String?> onChanged,
   }) {
     return Padding(
-      padding:
-          const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.only(bottom: 12),
       child: DropdownButtonFormField<String>(
         initialValue: value,
         decoration: InputDecoration(
           labelText: label,
-          prefixIcon:
-              const Icon(Icons.list_alt_outlined),
+          prefixIcon: const Icon(Icons.list_alt_outlined),
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none,
           ),
         ),
         items: items
             .map(
-              (item) =>
-                  DropdownMenuItem<String>(
+              (item) => DropdownMenuItem<String>(
                 value: item,
                 child: Text(item),
               ),
@@ -1696,43 +1536,10 @@ class ResultScreen extends StatelessWidget {
     required this.onAnalyze,
   });
 
-  String getMetric(
-    String key, {
-    String? fallback,
-  }) {
-    final data = result;
-
-    if (data == null) {
-      return '--';
-    }
-
-    if (data[key] != null) {
-      return formatNumber(data[key]);
-    }
-
-    final metrics = data['financial_metrics'];
-
-    if (metrics is Map) {
-      if (metrics[key] != null) {
-        return formatNumber(metrics[key]);
-      }
-
-      if (fallback != null &&
-          metrics[fallback] != null) {
-        return formatNumber(metrics[fallback]);
-      }
-    }
-
-    return '--';
-  }
-
   String formatNumber(dynamic value) {
-    final number =
-        double.tryParse(value.toString());
+    final number = double.tryParse(value.toString());
 
-    if (number == null) {
-      return value.toString();
-    }
+    if (number == null) return value.toString();
 
     if (number == number.roundToDouble()) {
       return number.toInt().toString();
@@ -1741,11 +1548,35 @@ class ResultScreen extends StatelessWidget {
     return number.toStringAsFixed(1);
   }
 
+  String getMetric(
+    String key, {
+    String? fallback,
+  }) {
+    if (result == null) return '--';
+
+    if (result![key] != null) {
+      return formatNumber(result![key]);
+    }
+
+    final metrics = result!['financial_metrics'];
+
+    if (metrics is Map) {
+      if (metrics[key] != null) {
+        return formatNumber(metrics[key]);
+      }
+
+      if (fallback != null && metrics[fallback] != null) {
+        return formatNumber(metrics[fallback]);
+      }
+    }
+
+    return '--';
+  }
+
   Color riskColor(String risk) {
     final value = risk.toLowerCase();
 
     if (value.contains('high') ||
-        value.contains('risk') ||
         value.contains('poor') ||
         value.contains('critical')) {
       return Colors.red;
@@ -1766,6 +1597,20 @@ class ResultScreen extends StatelessWidget {
     return const Color(0xFF2563EB);
   }
 
+  double parseScore(dynamic value) {
+    return double.tryParse(value?.toString() ?? '0') ?? 0;
+  }
+
+  double parseConfidence(dynamic value) {
+    final raw = double.tryParse(value?.toString() ?? '0') ?? 0;
+
+    if (raw >= 0 && raw <= 1) {
+      return raw * 100;
+    }
+
+    return raw.clamp(0, 100).toDouble();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (result == null) {
@@ -1775,20 +1620,16 @@ class ResultScreen extends StatelessWidget {
         ),
         body: Center(
           child: Padding(
-            padding:
-                const EdgeInsets.all(30),
+            padding: const EdgeInsets.all(30),
             child: Column(
-              mainAxisAlignment:
-                  MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(
                   Icons.analytics_outlined,
                   size: 80,
                   color: Color(0xFF2563EB),
                 ),
-
                 const SizedBox(height: 20),
-
                 const Text(
                   'No analysis yet',
                   style: TextStyle(
@@ -1796,24 +1637,16 @@ class ResultScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 const SizedBox(height: 10),
-
                 const Text(
                   'Complete your financial assessment to receive your AI-powered financial health score.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.grey,
-                  ),
+                  style: TextStyle(color: Colors.grey),
                 ),
-
                 const SizedBox(height: 25),
-
                 ElevatedButton(
                   onPressed: onAnalyze,
-                  child: const Text(
-                    'Start Assessment',
-                  ),
+                  child: const Text('Start Assessment'),
                 ),
               ],
             ),
@@ -1824,24 +1657,18 @@ class ResultScreen extends StatelessWidget {
 
     final data = result!;
 
-    final score = double.tryParse(
-          data['financial_health_score']
-                  ?.toString() ??
-              '0',
-        ) ??
-        0;
+    final score = parseScore(
+      data['financial_health_score'],
+    );
 
     final risk =
         data['risk_level']?.toString() ??
         data['prediction']?.toString() ??
         'Unknown';
 
-    final confidence =
-        double.tryParse(
-              data['confidence']?.toString() ??
-                  '0',
-            ) ??
-            0;
+    final confidence = parseConfidence(
+      data['confidence'],
+    );
 
     final color = riskColor(risk);
 
@@ -1856,28 +1683,22 @@ class ResultScreen extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        padding:
-            const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // ==================================================
-            // SCORE
-            // ==================================================
-
             Container(
               width: double.infinity,
-              padding:
-                  const EdgeInsets.all(28),
+              padding: const EdgeInsets.all(28),
               decoration: BoxDecoration(
-                gradient:
-                    const LinearGradient(
+                gradient: const LinearGradient(
                   colors: [
                     Color(0xFF2563EB),
                     Color(0xFF1D4ED8),
                   ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
-                borderRadius:
-                    BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(30),
                 boxShadow: const [
                   BoxShadow(
                     color: Color(0x26315BD5),
@@ -1892,25 +1713,20 @@ class ResultScreen extends StatelessWidget {
                     'FINANCIAL HEALTH SCORE',
                     style: TextStyle(
                       color: Colors.white70,
-                      fontWeight:
-                          FontWeight.bold,
+                      fontWeight: FontWeight.bold,
                       letterSpacing: 1,
                       fontSize: 12,
                     ),
                   ),
-
                   const SizedBox(height: 15),
-
                   Text(
                     score.toStringAsFixed(1),
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 72,
-                      fontWeight:
-                          FontWeight.bold,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-
                   const Text(
                     '/ 100',
                     style: TextStyle(
@@ -1918,42 +1734,28 @@ class ResultScreen extends StatelessWidget {
                       fontSize: 16,
                     ),
                   ),
-
                   const SizedBox(height: 15),
-
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 18,
                       vertical: 8,
                     ),
-                    decoration:
-                        BoxDecoration(
-                      color: color.withValues(
-                        alpha: 0.20,
-                      ),
-                      borderRadius:
-                          BorderRadius.circular(
-                        20,
-                      ),
+                    decoration: BoxDecoration(
+                      color: color.withValues(alpha: 0.20),
+                      borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
                       risk.toUpperCase(),
-                      style:
-                          const TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
-                        fontWeight:
-                            FontWeight.bold,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 12),
-
                   Text(
                     'Confidence: ${confidence.toStringAsFixed(1)}%',
-                    style:
-                        const TextStyle(
+                    style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 13,
                     ),
@@ -1961,106 +1763,72 @@ class ResultScreen extends StatelessWidget {
                 ],
               ),
             ),
-
             const SizedBox(height: 25),
-
-            // ==================================================
-            // METRICS
-            // ==================================================
-
             const Align(
-              alignment:
-                  Alignment.centerLeft,
+              alignment: Alignment.centerLeft,
               child: Text(
                 'Financial Metrics',
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight:
-                      FontWeight.bold,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-
             const SizedBox(height: 14),
-
             _metricTile(
               'Total Expenses',
               '₹${getMetric('total_expenses')}',
               Icons.shopping_cart_outlined,
             ),
-
             _metricTile(
               'Monthly Savings',
               '₹${getMetric('monthly_savings')}',
               Icons.savings_outlined,
             ),
-
             _metricTile(
               'Savings Rate',
               '${getMetric('savings_rate')}%',
               Icons.savings_outlined,
             ),
-
             _metricTile(
               'Debt Ratio',
               '${getMetric('debt_ratio')}%',
               Icons.credit_card_outlined,
             ),
-
             _metricTile(
               'Expense Ratio',
               '${getMetric('expense_ratio')}%',
               Icons.pie_chart_outline,
             ),
-
             _metricTile(
               'Discretionary Spending',
               '${getMetric(
                 'discretionary_spending_ratio',
-                fallback:
-                    'discretionary_ratio',
+                fallback: 'discretionary_ratio',
               )}%',
               Icons.shopping_bag_outlined,
             ),
-
             const SizedBox(height: 25),
-
-            // ==================================================
-            // AI INSIGHTS
-            // ==================================================
-
             if (data['insights'] is List &&
                 (data['insights'] as List).isNotEmpty)
               _insightsSection(
                 data['insights'] as List,
               ),
-
-            const SizedBox(height: 25),
-
-            // ==================================================
-            // RECOMMENDATIONS
-            // ==================================================
-
             if (data['recommendations'] is List &&
-                (data['recommendations'] as List)
-                    .isNotEmpty)
+                (data['recommendations'] as List).isNotEmpty) ...[
+              const SizedBox(height: 25),
               _recommendations(
                 data['recommendations'] as List,
               ),
-
+            ],
             const SizedBox(height: 25),
-
             SizedBox(
               width: double.infinity,
               height: 54,
               child: OutlinedButton.icon(
                 onPressed: onAnalyze,
-                icon: const Icon(
-                  Icons.refresh,
-                ),
-                label: const Text(
-                  'Run New Analysis',
-                ),
+                icon: const Icon(Icons.refresh),
+                label: const Text('Run New Analysis'),
               ),
             ),
           ],
@@ -2075,58 +1843,44 @@ class ResultScreen extends StatelessWidget {
     IconData icon,
   ) {
     return Container(
-      margin:
-          const EdgeInsets.only(
-        bottom: 12,
-      ),
-      padding:
-          const EdgeInsets.all(18),
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:
-            BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(18),
       ),
       child: Row(
         children: [
           Container(
-            padding:
-                const EdgeInsets.all(11),
-            decoration:
-                BoxDecoration(
-              color:
-                  const Color(0xFFEFF6FF),
-              borderRadius:
-                  BorderRadius.circular(
-                12,
-              ),
+            padding: const EdgeInsets.all(11),
+            decoration: BoxDecoration(
+              color: const Color(0xFFEFF6FF),
+              borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
               icon,
-              color:
-                  const Color(0xFF2563EB),
+              color: const Color(0xFF2563EB),
             ),
           ),
-
           const SizedBox(width: 15),
-
           Expanded(
             child: Text(
               title,
-              style:
-                  const TextStyle(
-                fontWeight:
-                    FontWeight.w600,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
-
-          Text(
-            value,
-            style:
-                const TextStyle(
-              fontSize: 17,
-              fontWeight:
-                  FontWeight.bold,
+          const SizedBox(width: 8),
+          Flexible(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],
@@ -2136,55 +1890,36 @@ class ResultScreen extends StatelessWidget {
 
   Widget _insightsSection(List insights) {
     return Column(
-      crossAxisAlignment:
-          CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
           'AI Insights',
           style: TextStyle(
             fontSize: 20,
-            fontWeight:
-                FontWeight.bold,
+            fontWeight: FontWeight.bold,
           ),
         ),
-
         const SizedBox(height: 14),
-
         ...insights.map(
           (item) => Container(
-            margin:
-                const EdgeInsets.only(
-              bottom: 10,
-            ),
-            padding:
-                const EdgeInsets.all(17),
-            decoration:
-                BoxDecoration(
+            margin: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.all(17),
+            decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius:
-                  BorderRadius.circular(
-                16,
-              ),
+              borderRadius: BorderRadius.circular(16),
             ),
             child: Row(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Icon(
                   Icons.auto_awesome,
-                  color:
-                      Color(0xFF2563EB),
+                  color: Color(0xFF2563EB),
                 ),
-
                 const SizedBox(width: 12),
-
                 Expanded(
                   child: Text(
                     item.toString(),
-                    style:
-                        const TextStyle(
-                      height: 1.4,
-                    ),
+                    style: const TextStyle(height: 1.4),
                   ),
                 ),
               ],
@@ -2195,59 +1930,38 @@ class ResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _recommendations(
-    List recommendations,
-  ) {
+  Widget _recommendations(List recommendations) {
     return Column(
-      crossAxisAlignment:
-          CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
           'AI Recommendations',
           style: TextStyle(
             fontSize: 20,
-            fontWeight:
-                FontWeight.bold,
+            fontWeight: FontWeight.bold,
           ),
         ),
-
         const SizedBox(height: 14),
-
         ...recommendations.map(
           (item) => Container(
-            margin:
-                const EdgeInsets.only(
-              bottom: 10,
-            ),
-            padding:
-                const EdgeInsets.all(17),
-            decoration:
-                BoxDecoration(
+            margin: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.all(17),
+            decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius:
-                  BorderRadius.circular(
-                16,
-              ),
+              borderRadius: BorderRadius.circular(16),
             ),
             child: Row(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Icon(
                   Icons.lightbulb_outline,
-                  color:
-                      Color(0xFF2563EB),
+                  color: Color(0xFF2563EB),
                 ),
-
                 const SizedBox(width: 12),
-
                 Expanded(
                   child: Text(
                     item.toString(),
-                    style:
-                        const TextStyle(
-                      height: 1.4,
-                    ),
+                    style: const TextStyle(height: 1.4),
                   ),
                 ),
               ],
@@ -2260,7 +1974,7 @@ class ResultScreen extends StatelessWidget {
 }
 
 // ============================================================
-// INSIGHTS SCREEN
+// INSIGHTS
 // ============================================================
 
 class InsightsScreen extends StatelessWidget {
@@ -2273,39 +1987,28 @@ class InsightsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final insights =
-        result?['insights'];
+    final insights = result?['insights'];
+    final recommendations = result?['recommendations'];
 
-    final recommendations =
-        result?['recommendations'];
-
-    if (insights is List &&
-        insights.isNotEmpty) {
+    if (insights is List && insights.isNotEmpty) {
       return Scaffold(
         appBar: AppBar(
           title: const Text(
             'AI Insights',
-            style: TextStyle(
-              fontWeight:
-                  FontWeight.bold,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         body: ListView(
-          padding:
-              const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           children: [
             const Text(
               'Your Personalized Insights',
               style: TextStyle(
                 fontSize: 26,
-                fontWeight:
-                    FontWeight.bold,
+                fontWeight: FontWeight.bold,
               ),
             ),
-
             const SizedBox(height: 8),
-
             const Text(
               'AI-generated insights based on your financial assessment.',
               style: TextStyle(
@@ -2313,9 +2016,7 @@ class InsightsScreen extends StatelessWidget {
                 height: 1.4,
               ),
             ),
-
             const SizedBox(height: 25),
-
             ...insights.map(
               (item) => _card(
                 Icons.auto_awesome,
@@ -2323,22 +2024,17 @@ class InsightsScreen extends StatelessWidget {
                 item.toString(),
               ),
             ),
-
             if (recommendations is List &&
                 recommendations.isNotEmpty) ...[
               const SizedBox(height: 15),
-
               const Text(
                 'Recommendations',
                 style: TextStyle(
                   fontSize: 22,
-                  fontWeight:
-                      FontWeight.bold,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-
               const SizedBox(height: 14),
-
               ...recommendations.map(
                 (item) => _card(
                   Icons.lightbulb_outline,
@@ -2356,27 +2052,20 @@ class InsightsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'AI Insights',
-          style: TextStyle(
-            fontWeight:
-                FontWeight.bold,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
       body: ListView(
-        padding:
-            const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         children: [
           const Text(
             'Smart Financial Guidance',
             style: TextStyle(
               fontSize: 26,
-              fontWeight:
-                  FontWeight.bold,
+              fontWeight: FontWeight.bold,
             ),
           ),
-
           const SizedBox(height: 8),
-
           const Text(
             'Complete your financial assessment to receive personalized AI insights.',
             style: TextStyle(
@@ -2384,27 +2073,22 @@ class InsightsScreen extends StatelessWidget {
               height: 1.4,
             ),
           ),
-
           const SizedBox(height: 25),
-
           _card(
             Icons.savings_outlined,
             'Build your savings',
             'Aim to maintain a consistent savings rate every month.',
           ),
-
           _card(
             Icons.credit_card_outlined,
             'Control debt',
             'Keep loan payments at a manageable percentage of your income.',
           ),
-
           _card(
             Icons.shopping_cart_outlined,
             'Watch discretionary spending',
             'Eating out, entertainment and other optional expenses can quickly add up.',
           ),
-
           _card(
             Icons.emergency_outlined,
             'Prepare for emergencies',
@@ -2421,64 +2105,42 @@ class InsightsScreen extends StatelessWidget {
     String description,
   ) {
     return Container(
-      margin:
-          const EdgeInsets.only(
-        bottom: 14,
-      ),
-      padding:
-          const EdgeInsets.all(20),
-      decoration:
-          BoxDecoration(
+      margin: const EdgeInsets.only(bottom: 14),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:
-            BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding:
-                const EdgeInsets.all(12),
-            decoration:
-                BoxDecoration(
-              color:
-                  const Color(0xFFEFF6FF),
-              borderRadius:
-                  BorderRadius.circular(
-                14,
-              ),
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: const Color(0xFFEFF6FF),
+              borderRadius: BorderRadius.circular(14),
             ),
             child: Icon(
               icon,
-              color:
-                  const Color(0xFF2563EB),
+              color: const Color(0xFF2563EB),
             ),
           ),
-
           const SizedBox(width: 15),
-
           Expanded(
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style:
-                      const TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
-                    fontWeight:
-                        FontWeight.bold,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 const SizedBox(height: 6),
-
                 Text(
                   description,
-                  style:
-                      const TextStyle(
+                  style: const TextStyle(
                     color: Colors.grey,
                     height: 1.4,
                   ),
@@ -2493,11 +2155,10 @@ class InsightsScreen extends StatelessWidget {
 }
 
 // ============================================================
-// PROFILE SCREEN
+// PROFILE
 // ============================================================
 
-class ProfileScreen
-    extends StatelessWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
@@ -2506,61 +2167,51 @@ class ProfileScreen
       appBar: AppBar(
         title: const Text(
           'Profile',
-          style: TextStyle(
-            fontWeight:
-                FontWeight.bold,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
       body: ListView(
-        padding:
-            const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         children: [
-          Center(
+          const Center(
             child: CircleAvatar(
               radius: 42,
-              backgroundColor:
-                  const Color(0xFFEFF6FF),
-              child: const Icon(
+              backgroundColor: Color(0xFFEFF6FF),
+              child: Icon(
                 Icons.person,
                 size: 45,
-                color:
-                    Color(0xFF2563EB),
+                color: Color(0xFF2563EB),
               ),
             ),
           ),
-
           const SizedBox(height: 15),
-
           const Center(
             child: Text(
               'SafeSpend User',
               style: TextStyle(
                 fontSize: 20,
-                fontWeight:
-                    FontWeight.bold,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
-
           const SizedBox(height: 30),
-
           _profileItem(
+            context,
             Icons.security_outlined,
             'Privacy & Security',
           ),
-
           _profileItem(
+            context,
             Icons.notifications_outlined,
             'Notifications',
           ),
-
           _profileItem(
+            context,
             Icons.info_outline,
             'About SafeSpend AI',
           ),
-
           _profileItem(
+            context,
             Icons.help_outline,
             'Help & Support',
           ),
@@ -2570,32 +2221,33 @@ class ProfileScreen
   }
 
   Widget _profileItem(
+    BuildContext context,
     IconData icon,
     String title,
   ) {
     return Container(
-      margin:
-          const EdgeInsets.only(
-        bottom: 10,
-      ),
-      decoration:
-          BoxDecoration(
+      margin: const EdgeInsets.only(bottom: 10),
+      decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:
-            BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: ListTile(
         leading: Icon(
           icon,
-          color:
-              const Color(0xFF2563EB),
+          color: const Color(0xFF2563EB),
         ),
         title: Text(title),
         trailing: const Icon(
           Icons.chevron_right,
           color: Colors.grey,
         ),
-        onTap: () {},
+        onTap: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('$title is available in the demo UI.'),
+            ),
+          );
+        },
       ),
     );
   }
@@ -2606,49 +2258,81 @@ class ProfileScreen
 // ============================================================
 
 class SafeSpendApi {
-  // Android emulator accesses host PC through 10.0.2.2
-  static const String baseUrl =
+  // ============================================================
+  // DO NOT CHANGE THIS FOR THE ANDROID EMULATOR
+  // ============================================================
+
+  static const String androidBaseUrl =
       'http://10.0.2.2:8000';
+
+  // ============================================================
+  // PUBLIC BACKEND FOR FLUTTER WEB / DEPLOYMENT
+  // ============================================================
+
+  static const String webBaseUrl =
+      'https://safespendai.onrender.com';
+
+  // ============================================================
+  // PLATFORM DETECTION
+  // ============================================================
+
+  static String get baseUrl {
+    if (kIsWeb) {
+      return webBaseUrl;
+    }
+
+    // Android emulator:
+    // 10.0.2.2 points to the host machine's localhost.
+    return androidBaseUrl;
+  }
+
+  // ============================================================
+  // PREDICT
+  // ============================================================
 
   static Future<Map<String, dynamic>> predict(
     Map<String, dynamic> data,
   ) async {
-    final url =
-        Uri.parse('$baseUrl/predict');
+    final url = Uri.parse('$baseUrl/predict');
+
+    debugPrint('==========================================');
+    debugPrint('SafeSpend AI API Request');
+    debugPrint('Base URL: $baseUrl');
+    debugPrint('Endpoint: $url');
+    debugPrint('Request Data: ${jsonEncode(data)}');
+    debugPrint('==========================================');
 
     try {
-      final response =
-          await http
-              .post(
-                url,
-                headers: {
-                  'Accept':
-                      'application/json',
-                  'Content-Type':
-                      'application/json',
-                },
-                body: jsonEncode(data),
-              )
-              .timeout(
-                const Duration(seconds: 30),
-              );
+      final response = await http
+          .post(
+            url,
+            headers: const {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: jsonEncode(data),
+          )
+          .timeout(
+            const Duration(seconds: 30),
+          );
 
-      debugPrint(
-        'HTTP status: ${response.statusCode}',
-      );
-
-      debugPrint(
-        'HTTP response: ${response.body}',
-      );
+      debugPrint('HTTP status: ${response.statusCode}');
+      debugPrint('HTTP response: ${response.body}');
 
       if (response.statusCode >= 200 &&
           response.statusCode < 300) {
-        final decoded =
-            jsonDecode(response.body);
+        dynamic decoded;
 
-        if (decoded
-            is Map<String, dynamic>) {
-          return decoded;
+        try {
+          decoded = jsonDecode(response.body);
+        } on FormatException {
+          throw Exception(
+            'Server returned a successful response, but it was not valid JSON.',
+          );
+        }
+
+        if (decoded is Map) {
+          return Map<String, dynamic>.from(decoded);
         }
 
         throw Exception(
@@ -2658,24 +2342,39 @@ class SafeSpendApi {
 
       if (response.statusCode == 422) {
         throw Exception(
-          'FastAPI validation error (422): ${response.body}',
+          'FastAPI validation error (422).\n'
+          'Check that the request fields match the backend model.\n\n'
+          '${response.body}',
+        );
+      }
+
+      if (response.statusCode >= 500) {
+        throw Exception(
+          'SafeSpend backend error (${response.statusCode}).\n'
+          'The server may be unavailable or restarting.\n\n'
+          '${response.body}',
         );
       }
 
       throw Exception(
-        'Server returned ${response.statusCode}: ${response.body}',
-      );
-    } on http.ClientException catch (e) {
-      throw Exception(
-        'Network error: $e',
-      );
-    } on FormatException catch (e) {
-      throw Exception(
-        'Invalid JSON response from server: $e',
+        'Server returned ${response.statusCode}:\n${response.body}',
       );
     } catch (e) {
+      if (e is http.ClientException) {
+        throw Exception(
+          'Network connection failed.\n'
+          'Check that the SafeSpend backend is running.\n\n$e',
+        );
+      }
+
+      if (e is FormatException) {
+        throw Exception(
+          'Invalid JSON response from SafeSpend AI.\n$e',
+        );
+      }
+
       throw Exception(
-        e.toString(),
+        'Unexpected SafeSpend AI error: $e',
       );
     }
   }
