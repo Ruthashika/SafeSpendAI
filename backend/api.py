@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 import pandas as pd
 import joblib
@@ -14,7 +15,18 @@ app = FastAPI(
     description="AI-powered financial health prediction API",
     version="3.0"
 )
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://safespend-ai.web.app",
+        "https://safespend-ai.firebaseapp.com",
+        "http://localhost:3000",
+        "http://localhost:5000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ============================================================
 # LOAD TRAINED ML MODEL
