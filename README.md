@@ -863,7 +863,7 @@ Flutter Web Output
 
 ---
 
-# 🏆 26. SmartAIthon 2026
+# 🏆 26. Hackathon Submission
 
 **SafeSpend AI — The Coder**
 
